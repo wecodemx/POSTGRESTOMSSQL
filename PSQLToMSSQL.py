@@ -3,10 +3,11 @@ import pickle
 import sys
 import os
 import time
+import pyodbc
 from signal import signal, SIGINT
 
-MSSQLDB = "BD_AUTORRECUPERACION_LAVISTA"
-MSSQLUSR = "AGUAPUEBLA\Administrador"
+MSSQLDB = "BD_AUTORECUPERACION_LAVISTA"
+MSSQLUSR = "AGUAPUEBLA\Administrator"
 MSSQLPWD = ""
 MSSQLTABLE = "dbo.mainsite_data"
 
@@ -43,7 +44,7 @@ while RUNNING:
     print(CURR_ID)
 
     try:
-        mssql_conn = pyodbc.connect("Driver={SQL Server Native Client 11.0};Server=localhost;Database="+MSSQLDB+";Trusted_Connection=yes;")
+        mssql_conn = pyodbc.connect("Driver={SQL Server Native Client 11.0};Server=SRV-IGNITION-1;Database="+MSSQLDB+";Trusted_Connection=yes;")
         #mssql_conn = pyodbc.connect("Driver={SQL Server Native Client 11};Server=localhost;Database="+MSSQLDB+"uid="+MSSQLUSR+";pwd="+MSSQLPWD)
         mssql_cursor = mssql_conn.cursor()
     except Exception as e:
@@ -62,7 +63,9 @@ while RUNNING:
         if len(data) > 0:
             for d in data:
                 print("Insertando",d[1],d[2],d[3])
-                mssql_cursor.execute("insert into "+MSSQLTABLE+"(tag_id, timestamp,value) values (?, ?, ?)", d[1],d[2],d[3])
+                query = "insert into "+MSSQLTABLE+"(tag_id, timestamp,value) values ("+str(d[1])+", '"+str(d[2].strftime("%Y-%m-%Y %H:%M:%S"))+"',"+str(d[3])+")"
+                print(query)
+                mssql_cursor.execute(query)
 
             mssql_conn.commit()
 
