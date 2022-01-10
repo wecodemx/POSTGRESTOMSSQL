@@ -43,11 +43,13 @@ while RUNNING:
     print(CURR_ID)
 
     try:
-        mssql_conn = pyodbc.connect("Driver={SQL Server Native Client 11};Server=localhost;Database="+MSSQLDB+";Trusted_Connection=yes;")
+        mssql_conn = pyodbc.connect("Driver={SQL Server Native Client 11.0};Server=localhost;Database="+MSSQLDB+";Trusted_Connection=yes;")
         #mssql_conn = pyodbc.connect("Driver={SQL Server Native Client 11};Server=localhost;Database="+MSSQLDB+"uid="+MSSQLUSR+";pwd="+MSSQLPWD)
         mssql_cursor = mssql_conn.cursor()
-    except:
-        print("Error while connecting to MSSQL")
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
 
     try:
         conn = psycopg2.connect("dbname=atautomation user=atadmin password=automation host=10.8.0.1")
