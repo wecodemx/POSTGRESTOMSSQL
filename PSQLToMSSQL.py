@@ -5,10 +5,10 @@ import os
 import time
 from signal import signal, SIGINT
 
-MSSQLDB = "db"
-MSSQLUSR = "usr"
-MSSQLPWD = "pwd"
-MSSQLTABLE = "table"
+MSSQLDB = "BD_AUTORECUPERACION_LAVISTA"
+MSSQLUSR = "AGUAPUEBLA\Administrador"
+MSSQLPWD = ""
+MSSQLTABLE = "dbo.mainsite_data"
 
 CURR_ID = 0
 RUNNING = True
@@ -43,8 +43,8 @@ while RUNNING:
     print(CURR_ID)
 
     try:
-        #mssql_conn = pyodbc.connect("Driver={SQL Server Native Client 11};Server=localhost;Database="+MSSQLDB+";Trusted_Connection=yes;")
-        mssql_conn = pyodbc.connect("Driver={SQL Server Native Client 11};Server=localhost;Database="+MSSQLDB+"uid="+MSSQLUSR+";pwd="+MSSQLPWD)
+        mssql_conn = pyodbc.connect("Driver={SQL Server Native Client 11};Server=localhost;Database="+MSSQLDB+";Trusted_Connection=yes;")
+        #mssql_conn = pyodbc.connect("Driver={SQL Server Native Client 11};Server=localhost;Database="+MSSQLDB+"uid="+MSSQLUSR+";pwd="+MSSQLPWD)
         mssql_cursor = mssql_conn.cursor()
     except:
         print("Error while connecting to MSSQL")
