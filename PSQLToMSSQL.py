@@ -5,7 +5,7 @@ import os
 import time
 from signal import signal, SIGINT
 
-MSSQLDB = "BD_AUTORECUPERACION_LAVISTA"
+MSSQLDB = "BD_AUTORRECUPERACION_LAVISTA"
 MSSQLUSR = "AGUAPUEBLA\Administrador"
 MSSQLPWD = ""
 MSSQLTABLE = "dbo.mainsite_data"
