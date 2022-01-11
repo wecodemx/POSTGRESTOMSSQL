@@ -6,7 +6,7 @@ import time
 import pyodbc
 from signal import signal, SIGINT
 
-MSSQLDB = "BD_AUTORECUPERACION_LAVISTA"
+MSSQLDB = "BD_AUTORRECUPERACION_LAVISTA"
 MSSQLUSR = "AGUAPUEBLA\Administrator"
 MSSQLPWD = ""
 MSSQLTABLE = "dbo.mainsite_data"
@@ -62,10 +62,9 @@ while RUNNING:
 
         if len(data) > 0:
             for d in data:
-                print("Insertando",d[1],d[2],d[3])
-                if "float" not in type(d[3]):
+                if "float" not in str(type(d[3])):
                     d[3] = 0
-                query = "insert into "+MSSQLTABLE+"(tag_id, timestamp,value) values ("+str(d[1])+", '"+str(d[2].strftime("%Y-%m-%Y %H:%M:%S"))+"',"+str(d[3])+")"
+                query = "insert into "+MSSQLTABLE+"(tag_id, timestamp,value) values ("+str(d[1])+", '"+str(d[2].strftime("%Y-%m-%d %H:%M:%S"))+"',"+str(d[3])+")"
                 print(query)
                 mssql_cursor.execute(query)
 
